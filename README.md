@@ -1,0 +1,1 @@
+# django-tender2.0
