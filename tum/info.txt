@@ -1,0 +1,42 @@
+basic detail
+
+	Organisation Chain
+	Tender Reference Number
+	Tender ID
+	Tender Category
+
+Covers Information
+	No. Of Covers - 2
+	cover type
+	description
+	document type
+
+emd fee detail
+	 emd amounr
+	 fee type
+	 payable to 
+
+
+
+Work Item Details
+	Title
+	Work Description
+	Pre Qualification
+	Product Category
+	Bid Validity(Days)
+
+
+Critical Dates
+	Published Date
+
+	Bid Opening Date
+	Bid Submission Start Date
+	Bid Submission end date
+
+Tenders Documents
+		Document Name
+		Description	
+
+tender invinting authority
+	Name
+	Address

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+{% load static %}
+<head>
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="{% static 'hoo/img/fav.png' %}">
+    <!-- Author Meta -->
+    <meta name="author" content="CodePixar">
+    <!-- Meta Description -->
+    <meta name="description" content="">
+    <!-- Meta Keyword -->
+    <meta name="keywords" content="">
+    <!-- meta character set -->
+    <meta charset="UTF-8">
+    <!-- Site Title -->
+    <title>Karma Shop</title>
+
+    <!--
+            CSS
+            ============================================= -->
+    <link rel="stylesheet" href="{% static 'hoo/css/linearicons.css' %}">
+    <link rel="stylesheet" href="{% static 'hoo/css/owl.carousel.css' %}">
+    <link rel="stylesheet" href="{% static 'hoo/css/themify-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'hoo/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'hoo/css/nice-select.css' %}">
+    <link rel="stylesheet" href="{% static 'hoo/css/nouislider.min.css' %}">
+    <link rel="stylesheet" href="{% static 'hoo/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'hoo/css/main.css' %}">
+    <style type="text/css">
+    .form-field-my input
+    {
+        display: block;
+        width: 100%;
+        height: calc(2.25rem + 2px);
+        padding: .375rem .75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: .25rem;
+        transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+
+    }
+    .form-field-my input:focus
+    {
+        color: #495057;
+        background-color: #fff;
+        border-color: #80bdff;
+        outline: 0;
+        box-shadow: 0 0 0 .2rem rgba(0, 123, 255, .25);
+    }
+    </style>
+</head>
+
+<body>
+
+    <!-- Start Header Area -->
+	<header class="header_area sticky-header">
+        <div class="main_menu">
+            <nav class="navbar navbar-expand-lg navbar-light main_box">
+                <div class="container">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <a class="navbar-brand logo_h" href="index.html"><img src="{% static 'hoo/img/logo.png' %}" alt=""></a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
+                        <ul class="nav navbar-nav menu_nav ml-auto">
+                            <li class="nav-item "><a class="nav-link" href="">Home</a></li>
+                            <li class="nav-item active"><a class="nav-link" href="{{ BASE_DIR}}/site/tenders">Tenders</a></li>
+                            {% if request.session.email %}
+                                <li class="nav-item"><a class="nav-link" href="{{ BASE_DIR }}/site/account">Account</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ BASE_DIR }}/site/logout">logout</a></li>
+                            {% else %}
+                                <li class="nav-item"><a class="nav-link" href="{{ BASE_DIR}}/site/login">Login</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ BASE_DIR}}/site/register">REGISTER</a></li>
+                            {% endif %}
+                            
+
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="nav-item"><a href="#" class="cart"><span class="ti-bag"></span></a></li>
+                            <li class="nav-item">
+                                <button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div class="search_input" id="search_input_box">
+            <div class="container">
+               
+            </div>
+        </div>
+    </header>
+    <!-- End Header Area -->
+    
+    <!-- Start Banner Area -->
+    <section class="banner-area organic-breadcrumb">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9"></div>
+                {% if request.session.email %}
+                    <div class="col-md-3">Welcome, {{ request.session.email}}</div>
+                {% else %}
+                    <div class="col-md-3"></div>
+                {% endif %}
+                {% if msg %}
+                    <h1> {{ msg}}</h1>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+    <!-- End Banner Area -->
+
+    <!--================Checkout Area =================-->
+    <section class="checkout_area section_gap">
+        <div class="container">
+            
+            
+            <div class="billing_details">
+                <div class="row">
+                    <div class="col-lg-8">
+                        Tender Reference Number  :  
+                            <blockquote class="generic-blockquote">
+                              <h1>  {{ tender_id }}</h1>
+                             
+                            
+                              <h4>  {{ obj.organization_chain }}</h4>
+                            </blockquote>
+                            
+                        <h3>Enter Details</h3>
+                        <form action="{% url 'submit_bid' tender_id %}" method="POST" enctype="multipart/form-data"> {% csrf_token %}
+                            {{ form.non_field_errors }}
+                            <div class="col-md-12 form-group p_star">First Name  <span>{{ form.firstname.errors }}</span>
+                                
+                               <span class="form-field-my">{{ form.firstname }}</span> 
+                                
+                            </div>
+                            <div class="col-md-12 form-group p_star">Last Name <span>{{ form.lastname.errors }}</span>
+                                <span class="form-field-my">{{ form.lastname }}</span> 
+                                
+                            </div>
+                            
+                            <div class="col-md-12 form-group p_star">Email Address <span>{{ form.email.errors }}</span>
+                                <span class="form-field-my">{{ form.email }}</span> 
+                                
+                            </div>
+                            <div class="col-md-12 form-group p_star">Organization-Chain Name <span>{{ form.org_name.errors }}</span>
+                                <span class="form-field-my">{{ form.org_name }}</span> 
+                                
+                            </div>
+                            <div class="col-md-12 form-group p_star">Enter Extra Detail: <span>{{ form.detail.errors }}</span>
+                                <span class="form-field-my">{{ form.detail }}</span> 
+                                
+                            </div>
+                            
+                            
+                            
+                            <br>
+                            <br>
+                            
+                            <div class="col-md-12 form-group p_star">Document Upload<br>
+                                <div class="col-md-12 mt-sm-30">
+                                    
+                                    <div class="">
+                                        <ul class="unordered-list">
+                                            <li>Please upload zip file only (*.zip) </li>
+                                            <li>All Document must be included in that zip file only</li>
+                                            
+                                            <li>Technical Details </li>
+                                            <li>Make Myspace Your Best Designed Space</li>
+                                            <li>Cleaning And Organizing Your Computer</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <br>
+                                 <div class="col-md-12 form-group p_star">Upload Document Here: <span>{{ form.fileupload.errors }}</span>
+                                <span class=" ">{{ form.fileupload }}</span> 
+                                
+                            </div>
+                            </div>
+
+                           
+                            
+                       
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="order_box">
+                            <h2>Your BID</h2>
+                            <div style="text-align:right">
+                                <p>Given EMD Amount</p>
+                                <h3> &#8377;{{ obj.emd_amount}}</h3>
+                            </div>
+                            <div style="text-align:right">
+                                <p>Your BID</p>
+                                &#8377;<span class="form-field-my"> {{ form.amount }} </span>
+                            </div>
+                            
+                            <ul class="list list_2">
+                                
+                                <li><a href="#">Shipping <span>+                &#8377;0</span></a></li>
+                                <li><a href="#">Total <span>   same as above</span></a></li>
+                            </ul>
+                            <div class="payment_item">
+                               
+                                <p>Please send a check to Store Name, Store Street, Store Town, Store State / County,
+                                    Store Postcode.</p>
+                                <p>Pay via PayPal; you can pay with your credit card if you don’t have a PayPal
+                                    account.</p>
+                            
+                            </div>
+                            <div class="creat_account">
+                                
+                            </div>
+                            <input type="submit" class="primary-btn" value="Confirm Your BID" style="border:1px solid grey;width:100%"></a>
+
+                        </div>
+                    </div>
+                     </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================End Checkout Area =================-->
+
+    <!-- start footer Area -->
+    <footer class="footer-area section_gap">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3  col-md-6 col-sm-6">
+                    <div class="single-footer-widget">
+                        <h6>About Us</h6>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
+                            ut labore dolore
+                            magna aliqua.
+                        </p>
+                    </div>
+                </div>
+               
+                <div class="col-lg-3  col-md-6 col-sm-6">
+                    <div class="single-footer-widget mail-chimp">
+                        <h6 class="mb-20">Instragram Feed</h6>
+                        <ul class="instafeed d-flex flex-wrap">
+                            <li><img src="{% static 'hoo/img/i1.jpg' %}" alt=""></li>
+                            <li><img src="{% static 'hoo/img/i2.jpg' %}" alt=""></li>
+                            <li><img src="{% static 'hoo/img/i3.jpg' %}" alt=""></li>
+                            <li><img src="{% static 'hoo/img/i4.jpg' %}" alt=""></li>
+                            <li><img src="{% static 'hoo/img/i5.jpg' %}" alt=""></li>
+                            <li><img src="{% static 'hoo/img/i6.jpg' %}" alt=""></li>
+                            <li><img src="{% static 'hoo/img/i7.jpg' %}" alt=""></li>
+                            <li><img src="{% static 'hoo/img/i8.jpg' %}" alt=""></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-6">
+                    <div class="single-footer-widget">
+                        <h6>Follow Us</h6>
+                        <p>Let us be social</p>
+                        <div class="footer-social d-flex align-items-center">
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-dribbble"></i></a>
+                            <a href="#"><i class="fa fa-behance"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom d-flex justify-content-center align-items-center flex-wrap">
+                <p class="footer-text m-0"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+</p>
+            </div>
+        </div>
+    </footer>
+    <!-- End footer Area -->
+
+
+    <script src="{% static 'hoo/js/vendor/jquery-2.2.4.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+        crossorigin="anonymous"></script>
+    <script src="{% static 'hoo/js/vendor/bootstrap.min.js' %}"></script>
+    <script src="{% static 'hoo/js/jquery.ajaxchimp.min.js' %}"></script>
+    <script src="{% static 'hoo/js/jquery.nice-select.min.js' %}"></script>
+    <script src="{% static 'hoo/js/jquery.sticky.js' %}"></script>
+    <script src="{% static 'hoo/js/nouislider.min.js' %}"></script>
+    <script src="{% static 'hoo/js/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'hoo/js/owl.carousel.min.js' %}"></script>
+    <!--gmaps Js-->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
+    <script src="{% static 'hoo/js/gmaps.min.js' %}"></script>
+    <script src="{% static 'hoo/js/main.js' %}"></script>
+</body>
+
+</html>
